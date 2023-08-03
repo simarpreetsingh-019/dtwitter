@@ -4,17 +4,14 @@ import { NetworkType } from "@airgap/beacon-sdk";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 
 export const wallet = new BeaconWallet({
-  name : "Tezos Twitter",
-  preferredNetwork : NetworkType.GHOSTNET
+  name : "Tezos Twitter"
 })
 // initialise the app's name and setting the choice of network we want our operations to run on
 
 
 // TODO 2.b - Complete connectWallet function (for ghostnet)
 export const connectWallet = async () => {
-  await wallet.requestPermissions({
-    network : {type : NetworkType.GHOSTNET}
-  })  
+  await wallet.requestPermissions({})  
 };
 
 // requesting permission from user that when he clicks cinnect wallet, then it will be connecting to the given network.

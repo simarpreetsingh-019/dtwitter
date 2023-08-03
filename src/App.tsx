@@ -6,9 +6,15 @@ import Tweet from "./components/Tweet";
 import { updateContent } from "./utils/operation";
 import { fetchStorage } from "./utils/tzkt";
 
+interface tweetFeedType {
+  author: string,
+  entry: string,
+  date: string
+}
+
 const App: React.FC = () => {
   // Players holding lottery tickets
-  const [tweetFeed ,  setTweetFeed] = useState<string[]>([]);
+  const [tweetFeed ,  setTweetFeed] = useState<tweetFeedType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [tweet , setTweet] = useState<string>("")
 
@@ -18,16 +24,15 @@ const App: React.FC = () => {
     const fetchData = async () => {
 
       const storage = await fetchStorage();
-      console.log("test 4, fetch data");
       const data = storage.author.map(function (authors : string, i : number) {
         return {
           authors,
           entry: storage.entries[i],
-          date: new Date(storage.dates[i])
+          date: new Date(storage.dates[i]).toISOString()
         }
       })
-      console.log("test 5, fetch data " + data[0].entry);
-      setTweetFeed(data.values());
+      console.log(typeof(data), data);
+      setTweetFeed(data);
     };
 
     fetchData();
@@ -70,9 +75,11 @@ const App: React.FC = () => {
           {/* {tweetFeed} */}
           {
             tweetFeed.map((tweet,i)=> (
-              <div>
-                {tweet}
-                </div>
+              <div key={i}>
+                {tweet.author}
+                {tweet.entry}
+                {tweet.date}
+              </div>
             ))
           }
         </div>
